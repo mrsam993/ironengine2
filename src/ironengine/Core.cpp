@@ -119,7 +119,7 @@ namespace ironengine
 				}
 			}
 
-			for (std::list<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
+			for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
 				//for (auto it = m_entities.begin();
 				it != m_entities.end(); ++it)
 			{
@@ -129,7 +129,7 @@ namespace ironengine
 			rend::Renderer r(INITIAL_WIDTH, INITIAL_HEIGHT);
 			r.clear();
 
-			for (std::list<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
+			for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
 				//for (auto it = m_entities.begin();
 				it != m_entities.end(); ++it)
 			{
