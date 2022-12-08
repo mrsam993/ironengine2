@@ -9,6 +9,13 @@ struct Player : Component
         m_angle(0)
     {}
 
+    // void onInit()
+    //{
+    //   getEntity()->addComponent<Camera>();
+    //   getEntity()->addComponent<AudioListener>();
+    //} TODO LISTENER ON PLAYER, SOURCE ON OBJS
+    // TODO ADD KEY PRESSES FOR CAMERA, REMOVE FROM QUAD
+
     void onTick()
     {
         m_angle += 1.0f;
@@ -25,14 +32,20 @@ int main(int argc, char* argv[])
 
     auto e = core->addEntity();
     e->addComponent<Player>();
-    e->addComponent<ironengine::TriangleRenderer>()->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
+    std::shared_ptr<TriangleRenderer> tr = e->addComponent<TriangleRenderer>();
+    tr->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
+    //tr->setModel(core->getResources()->load<Model>("models/curuthers"));
+    //tr->setShader(core->getResources()->load<Shader>("shaders/basic")); TODO ADD THIS TO REPLACE HARD CODED PATHS
     e->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
   
     auto e2 = core->addEntity();
     e2->addComponent<SoundSource>();
     e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+    e2->addComponent<IrcComponent>();
 
     core->start();
 
     return 0;
 }
+
+//TODO MULTI CAMERA SPLIT SCREEN?

@@ -33,9 +33,10 @@ namespace ironengine
 	{
 		rend::Renderer r(640, 480);
 
+		r.backfaceCull(true); //TODO FINE
 		r.shader(&m_shader);
 		r.mesh(&m_mesh);
-		r.projection(rend::perspective(rend::radians(45.0f), 1.0f, 0.1f, 100.0f));
+		r.projection(rend::perspective(rend::radians(45.0f), 1.0f, 0.1f, 100.0f)); //TODO GET THIS DATA FROM CAMERA REGISTER CAMERA WITH CORE, LIST OF CAMERAS IN CORE
 		r.model(getParent()->getTransform()->getModelMatrix());
 		r.color(m_color);
 

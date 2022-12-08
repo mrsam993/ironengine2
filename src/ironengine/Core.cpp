@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
 
 namespace ironengine
 {
@@ -15,7 +17,7 @@ namespace ironengine
 		m_keyboard = std::make_shared<Keyboard>();
 		m_renderer = std::make_shared<rend::Renderer>(640, 480);
 		m_renderer->projection(glm::perspective(glm::radians(45.0f), 640.0f / 480.0f, 0.1f, 100.f));
-		//m_renderer->backfaceCull(true);
+		m_renderer->backfaceCull(true);
 		//m_renderer->blend(true);
 		//m_renderer->depthTest(true);
 	}
@@ -77,6 +79,15 @@ namespace ironengine
 		}
 
 		alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+
+		WSADATA wsadata;
+
+		/* Initialize Winsock */
+		int iResult = WSAStartup(MAKEWORD(2, 2), &wsadata);
+		if (iResult != 0)
+		{
+			throw std::runtime_error("WSAStartup failed");
+		}
 
 		return rtn;
 	}

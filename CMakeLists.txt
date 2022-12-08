@@ -14,6 +14,7 @@ if(WIN32)
   set(LIBOPENGL opengl32)
   set(LIBGLEW glew32)
   set(LIBSDL2 SDL2 SDL2main)
+  set(LIBWINSOCK ws2_32)
 else()
   include_directories(
     src
@@ -29,6 +30,7 @@ else()
   set(LIBOPENGL GL)
   set(LIBGLEW GLEW)
   set(LIBSDL2 SDL2)
+  set(LIBWINSOCK socket)
 endif()
 
 add_library(rend
@@ -107,9 +109,12 @@ add_library(ironengine
 
     src/ironengine/RigidBody.h
     src/ironengine/RigidBody.cpp
+
+    src/ironengine/IrcComponent.h
+    src/ironengine/IrcComponent.cpp
 )
 
-target_link_libraries(ironengine rend ${LIBSDL2} ${LIBOPENAL})
+target_link_libraries(ironengine rend ${LIBSDL2} ${LIBOPENAL} ${LIBWINSOCK})
 
 add_executable(game
     src/game/main.cpp

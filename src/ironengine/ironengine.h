@@ -8,5 +8,6 @@
 #include "SoundSource.h"
 #include "Keyboard.h"
 #include "Camera.h"
+#include "IrcComponent.h"
 
 #endif
