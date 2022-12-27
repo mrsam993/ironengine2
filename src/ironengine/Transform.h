@@ -7,7 +7,7 @@
 namespace ironengine
 {
 	/// @brief Struct that allows the transformation of components
-	class Transform : public Component
+	struct Transform : public Component
 	{
 	private:
 		/// @brief The position of a component

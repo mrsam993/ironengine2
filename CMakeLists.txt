@@ -112,6 +112,15 @@ add_library(ironengine
 
     src/ironengine/IrcComponent.h
     src/ironengine/IrcComponent.cpp
+
+    src/ironengine/Resource.h
+    src/ironengine/Resource.cpp
+
+    src/ironengine/Resources.h
+    src/ironengine/Resources.cpp
+
+    src/ironengine/Texture.h
+    src/ironengine/Texture.cpp
 )
 
 target_link_libraries(ironengine rend ${LIBSDL2} ${LIBOPENAL} ${LIBWINSOCK})

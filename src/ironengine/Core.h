@@ -5,6 +5,7 @@
 #include <rend/rend.h>
 #include "Entity.h"
 #include "Component.h"
+#include "Resources.h"
 
 #define INITIAL_WIDTH 640
 #define INITIAL_HEIGHT 480
@@ -33,6 +34,9 @@ namespace ironengine
 		std::shared_ptr<Camera> m_camera;
 		/// @brief Renderer for the program
 		std::shared_ptr<rend::Renderer> m_renderer;
+
+		std::shared_ptr<Resources> m_resources;
+
 		/// @brief Window for the program
 		SDL_Window* m_window;
 		/// @brief Context for the window
@@ -65,6 +69,8 @@ namespace ironengine
 		/// @brief Get the engine camera object
 		/// @return Shared pointer to the camera object.
 		std::shared_ptr<Camera> getCamera();
+
+		std::shared_ptr<Resources> getResources();
 
 		/// @brief 
 		/// @param _out

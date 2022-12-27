@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Keyboard.h"
 #include "Camera.h"
+#include "Resources.h"
 #include <stdexcept>
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -13,11 +14,7 @@ namespace ironengine
 {
 	Core::Core()
 	{
-		m_camera = std::make_shared<Camera>();
-		m_keyboard = std::make_shared<Keyboard>();
-		m_renderer = std::make_shared<rend::Renderer>(640, 480);
-		m_renderer->projection(glm::perspective(glm::radians(45.0f), 640.0f / 480.0f, 0.1f, 100.f));
-		m_renderer->backfaceCull(true);
+
 		//m_renderer->blend(true);
 		//m_renderer->depthTest(true);
 	}
@@ -88,6 +85,13 @@ namespace ironengine
 		{
 			throw std::runtime_error("WSAStartup failed");
 		}
+
+		rtn->m_camera = std::make_shared<Camera>();
+		rtn->m_keyboard = std::make_shared<Keyboard>();
+		rtn->m_renderer = std::make_shared<rend::Renderer>(640, 480);
+		rtn->m_renderer->projection(glm::perspective(glm::radians(45.0f), 640.0f / 480.0f, 0.1f, 100.f));
+		rtn->m_renderer->backfaceCull(true);
+		rtn->m_resources = std::make_shared<Resources>();
 
 		return rtn;
 	}
@@ -179,5 +183,10 @@ namespace ironengine
 	std::shared_ptr<Camera> Core::getCamera()
 	{
 		return m_camera;
+	}
+
+	std::shared_ptr<Resources> Core::getResources()
+	{
+		return m_resources;
 	}
 }

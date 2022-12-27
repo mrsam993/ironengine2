@@ -30,14 +30,19 @@ int main(int argc, char* argv[])
 {
     std::shared_ptr<ironengine::Core> core = ironengine::Core::initialize(argv[0]);
 
+    //
     auto e = core->addEntity();
     e->addComponent<Player>();
+
+    //
     std::shared_ptr<TriangleRenderer> tr = e->addComponent<TriangleRenderer>();
-    tr->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
+    tr->setColor(1.0f, 1.0f, 0.0f, 0.5f);
     //tr->setModel(core->getResources()->load<Model>("models/curuthers"));
     //tr->setShader(core->getResources()->load<Shader>("shaders/basic")); TODO ADD THIS TO REPLACE HARD CODED PATHS
+    //tr->setTexture(core->getResources()->load<Texture>("../data/box.jpg"));
     e->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
   
+    //
     auto e2 = core->addEntity();
     e2->addComponent<SoundSource>();
     e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
@@ -49,4 +54,3 @@ int main(int argc, char* argv[])
 }
 
 //TODO MULTI CAMERA SPLIT SCREEN?
-//test

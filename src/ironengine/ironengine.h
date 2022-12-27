@@ -9,5 +9,8 @@
 #include "Keyboard.h"
 #include "Camera.h"
 #include "IrcComponent.h"
+#include "Resource.h"
+#include "Resources.h"
+#include "Texture.h"
 
 #endif
