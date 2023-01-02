@@ -9,21 +9,37 @@ struct Player : Component
         m_angle(0)
     {}
 
-    // void onInit()
-    //{
-    //   getEntity()->addComponent<Camera>();
-    //   getEntity()->addComponent<AudioListener>();
-    //} TODO LISTENER ON PLAYER, SOURCE ON OBJS
+    void onInit()
+    {
+        model = getParent()->addComponent<TriangleRenderer>();
+        camera = getParent()->addComponent<Camera>();
+        transform = getParent()->getTransform();
+
+        //getEntity()->addComponent<AudioListener>();
+    } 
+    // TODO LISTENER ON PLAYER, SOURCE ON OBJS
     // TODO ADD KEY PRESSES FOR CAMERA, REMOVE FROM QUAD
 
     void onTick()
-    {
-        m_angle += 1.0f;
+    {   
+        if (getCore()->getKeyboard()->GetKey(KeyCode::up))
+        {
+            transform->changePosition(0.0f, 0.0f, -0.001f);
+        }
 
-        getParent()->getTransform()->setRotation(0, m_angle, 0);
+        if (getCore()->getKeyboard()->GetKey(KeyCode::down))
+        {
+            transform->changePosition(0.0f, 0.0f, 0.001f);
+        }
+
+        model->getParent()->getTransform()->setPosition(transform->getPosition());
+        camera->getParent()->getTransform()->setPosition(transform->getPosition());
     }
 
     float m_angle;
+    std::shared_ptr<TriangleRenderer> model;
+    std::shared_ptr<Camera> camera;
+    std::shared_ptr<Transform> transform;
 };
 
 int main(int argc, char* argv[])
@@ -32,21 +48,25 @@ int main(int argc, char* argv[])
 
     //
     auto e = core->addEntity();
-    e->addComponent<Player>();
+    auto player = e->addComponent<Player>();
+    player->onInit();
 
     //
-    std::shared_ptr<TriangleRenderer> tr = e->addComponent<TriangleRenderer>();
+    auto e1 = core->addEntity();
+    std::shared_ptr<TriangleRenderer> tr = e1->addComponent<TriangleRenderer>();
     tr->setColor(1.0f, 1.0f, 0.0f, 0.5f);
     //tr->setModel(core->getResources()->load<Model>("models/curuthers"));
     //tr->setShader(core->getResources()->load<Shader>("shaders/basic")); TODO ADD THIS TO REPLACE HARD CODED PATHS
     //tr->setTexture(core->getResources()->load<Texture>("../data/box.jpg"));
-    e->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
+    e1->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
   
     //
     auto e2 = core->addEntity();
-    e2->addComponent<SoundSource>();
-    e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
     e2->addComponent<IrcComponent>();
+
+    //
+    std::shared_ptr<SoundSource> ss1 = e2->addComponent<SoundSource>();
+    ss1->getParent()->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
 
     core->start();
 

@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "Component.h"
 #include "Transform.h"
 
 namespace ironengine
@@ -7,9 +8,10 @@ namespace ironengine
 	struct Transform;
 
 	/// @brief Basic component struct that other classes will inherit from
-	class Camera
+	struct Camera : Component
 	{
 	private:
+		void onTick();
 
 	public:
 		/// @Brief Basic constructor for camera class

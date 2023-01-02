@@ -49,6 +49,13 @@ namespace ironengine
 		m_Dirty = true;
 	}
 
+	void Transform::changePosition(float _x, float _y, float _z)
+	{
+		m_Position += glm::vec3(_x, _y, _z);
+		m_TranslationMatrix = glm::translate(glm::mat4(1.0f), m_Position);
+		m_Dirty = true;
+	}
+
 
 	glm::vec3 Transform::getRotation()
 	{

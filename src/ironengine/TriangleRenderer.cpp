@@ -17,17 +17,9 @@ namespace ironengine
 
 	void TriangleRenderer::onTick()
 	{
-		auto transform = getParent()->getTransform();
+		m_angle += 0.01f;
 
-		if (getCore()->getKeyboard()->GetKey(KeyCode::up))
-		{
-			transform->setScale(transform->getScale() * 1.05f);
-		}
-
-		if (getCore()->getKeyboard()->GetKey(KeyCode::down))
-		{
-			transform->setScale(transform->getScale() * 0.95f);
-		}
+		getParent()->getTransform()->setRotation(0, m_angle, 0);
 	}
 
 	void TriangleRenderer::onDisplay()

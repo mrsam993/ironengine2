@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "Transform.h"
+#include "Core.h"
+#include "Keyboard.h"
 
 namespace ironengine
 {
@@ -16,4 +18,9 @@ namespace ironengine
 		m_farPlane(100.0f),
 		m_transform(std::make_shared<Transform>())
 	{}
+
+	void Camera::onTick()
+	{
+
+	}
 }

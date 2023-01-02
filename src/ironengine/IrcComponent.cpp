@@ -70,24 +70,9 @@ namespace ironengine
 
 	void IrcComponent::onTick()
 	{
-		//std::string message = "Hello World"; //send buffer m_outgoing
-		//int iResult = send(m_socket, message.c_str(), (int)message.length(), 0); //iresult = bytes
-		//if (iResult == 0)
-		//{
-		//	// Connection closed. Close.
-		//	m_disconnected = true;
-		//	return;
-		//}
-		//else if (iResult == SOCKET_ERROR)
-		//{
-		//	// Connection error. Close.
-		//	m_disconnected = true;
-		//	return;
-		//}
-
 		//remove bytes from outgoing vector.erase(begin, begin+iResult);
 
-		char buffer[128] = { 0 };
+		char buffer[4096] = { 0 };
 		int iResult = recv(m_socket, buffer, sizeof(buffer), 0);
 		if (iResult == 0)
 		{
@@ -106,22 +91,37 @@ namespace ironengine
 			return;
 		}
 
-		std::cout << buffer;
+		std::string sBuffer = std::string(buffer);
+		
+		std::cout << sBuffer;
 
-		//fill incoming with bytes
-		//read and handle, then clear
+		if (sBuffer.find("No Ident response") != std::string::npos) {
+			authenticate();
+		}
 	}
 
 	void IrcComponent::authenticate()
 	{
-		//fill outgoing buffer
-		//m_outgoing
-		 
+		srand(time(NULL));
+		int id = rand() % (9999 - 1000);
 		
-		//srand(time(NULL));
-		//std::cout << rand() % (999 - 100);
-		//NICK ie111
-		//USER ie111 * * :ie111 ie111
+		std::string message = "nick sam59\nuser sam59 * * :Anon Anon"; //send buffer m_outgoing
+		int iResult = send(m_socket, message.c_str(), (int)message.length(), 0); //iresult = bytes
+		if (iResult == 0)
+		{
+			// Connection closed. Close.
+			m_disconnected = true;
+			return;
+		}
+		else if (iResult == SOCKET_ERROR)
+		{
+			// Connection error. Close.
+			m_disconnected = true;
+			return;
+		}
+
+		//"nick S5220251GEP" + string(id)
+		//"user S5220251GEP" + string(id) + "* * :Anon Anon"
 		//JOIN ironEngineGameEngineProgramming22/23
 	}
 

@@ -36,5 +36,7 @@ namespace ironengine
 		void setColor(float _r, float _g, float _b, float _a);
 
 		void setTexture(std::shared_ptr<Texture> _texture);
+
+		float m_angle = 0;
 	};
 }
