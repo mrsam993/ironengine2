@@ -16,8 +16,8 @@ namespace ironengine
 	/// @brief Information about the state of the key
 	struct KeyState
 	{
-		KeyState(bool _down, uint64_t _updateID) :
-			down(_down)
+		// Change the key ID appropriately depending on the state of the key
+		KeyState(bool _down, uint64_t _updateID) : down(_down)
 		{
 			if (_down)
 			{
@@ -29,6 +29,7 @@ namespace ironengine
 			}
 		}
 
+		// Reset the state of the key
 		bool down = false;
 		uint64_t pressed = 0;
 		uint64_t released = 0;
@@ -37,28 +38,24 @@ namespace ironengine
 	/// @brief Keyboard and mouse input
 	class Keyboard
 	{
+		// Friend declarations
 		friend struct Core;
 
 	private:
-		/// @brief TEST
-		bool m_quit;
-		/// @brief TEST
-		uint64_t m_updateCount;
-
-		/// @brief TEST
+		/// @brief All the keys we want to keep track of
 		std::vector<int> m_keys;
 
-		/// @brief TEST
+		/// @brief All the keys that are currently held down
 		std::vector<int> m_keysDown;
 
-		/// @brief TEST
+		/// @brief All the keys that are currently not held down
 		std::vector<int> m_keysUp;
 
-		/// @brief TEST
+		/// @brief Allows the keyboard to be updated on call
 		void Update();
 	
 	public:
-		/// @brief TEST
+		/// @brief Basic constructor for the keyboard
 		Keyboard();
 
 		/// @brief Find out if a key is being pressed

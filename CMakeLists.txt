@@ -121,6 +121,12 @@ add_library(ironengine
 
     src/ironengine/Texture.h
     src/ironengine/Texture.cpp
+
+    src/ironengine/Model.h
+    src/ironengine/Model.cpp
+
+    src/ironengine/Audio.h
+    src/ironengine/Audio.cpp
 )
 
 target_link_libraries(ironengine rend ${LIBSDL2} ${LIBOPENAL} ${LIBWINSOCK})

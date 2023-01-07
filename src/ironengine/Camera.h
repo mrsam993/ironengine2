@@ -1,26 +1,32 @@
-#include <SDL2/SDL.h>
 #include "Component.h"
 #include "Transform.h"
+#include <SDL2/SDL.h>
+#include <rend/rend.h>
 
 namespace ironengine
 {
 	// Forward declarations
 	struct Transform;
 
-	/// @brief Basic component struct that other classes will inherit from
+	/// @brief Camera for the scene, inherits from component
 	struct Camera : Component
 	{
-	private:
+	private:		
+		/// @brief Function that updates every tick allowing constant updates
 		void onTick();
 
 	public:
-		/// @Brief Basic constructor for camera class
+		/// @brief Basic constructor for camera
 		Camera();
-		/// @Brief Detailed constructor for camera class
+		/// @brief Detailed constructor for camera
 		/// @param _fov Field of view in degrees
 		/// @param _near Position of the near plane
 		/// @param _far Position of the far plane
 		Camera(float _fov, float _near, float _far);
+		/// @brief Called on camera declaration, sets m_camera in core 
+		void onInit();
+		/// @brief Calculates and gets the view matrix from the model matrix
+		rend::mat4 getViewMatrix();
 
 		/// @brief Field of view in degrees
 		float m_fov;
@@ -28,7 +34,5 @@ namespace ironengine
 		float m_nearPlane;
 		/// @brief Position of the far plane
 		float m_farPlane;
-		/// @brief Cameras transform component
-		std::shared_ptr<Transform> m_transform;
 	};
 }

@@ -10,6 +10,7 @@ namespace ironengine
 	{
 		// Friend declarations
 		friend struct Entity;
+
 	private:
 		/// @brief Mesh of the triangle renderer
 		rend::Mesh m_mesh;
@@ -17,10 +18,10 @@ namespace ironengine
 		rend::Shader m_shader;
 		/// @brief Color of the triangle renderer
 		glm::vec4 m_color;
-
+		/// @brief Texture of the triangle renderer
 		std::weak_ptr<Texture> m_texture;
 
-		/// @brief Function that is called every tick
+		/// @brief Function that is called every tick allowing constant updates
 		void onTick();
 		/// @brief Function that is called when updating the display
 		void onDisplay();
@@ -35,8 +36,11 @@ namespace ironengine
 		/// @param _a Alpha channel
 		void setColor(float _r, float _g, float _b, float _a);
 
+		/// @brief Function to set the texture of the displayed triangle
+		/// @param _texture The texture file
 		void setTexture(std::shared_ptr<Texture> _texture);
 
+		/// @brief The current angle of the triangle
 		float m_angle = 0;
 	};
 }

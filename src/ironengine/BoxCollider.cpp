@@ -1,9 +1,8 @@
 #include "BoxCollider.h"
-
 #include "Entity.h"
 #include "Transform.h"
 
-namespace ironengine
+namespace ironengine //TODO COMMENT
 {
 	bool BoxCollider::colliding(BoxCollider& _other)
 	{

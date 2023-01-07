@@ -12,5 +12,7 @@
 #include "Resource.h"
 #include "Resources.h"
 #include "Texture.h"
+#include "Model.h"
+#include "Audio.h"
 
 #endif

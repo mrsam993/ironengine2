@@ -15,11 +15,14 @@ namespace ironengine
 	/// @brief Basic component struct that other classes will inherit from
 	struct Component
 	{
-	private:
+		// Friend declarations
 		friend struct Entity;
 
-		/// @brief Function that is called every tick
+	private:
+		/// @brief Function that is called every tick allowing constant updates
 		virtual void onTick();
+		/// @brief Called on component declaration
+		virtual void onInit();
 		/// @brief Function that is called when updating the display
 		virtual void onDisplay();
 		/// @brief Function that destroys the current component

@@ -1,9 +1,10 @@
 #ifndef IRONENGINE_ENTITY_H
 #define IRONENGINE_ENTITY_H
 
+#include "Transform.h"
 #include <memory>
 #include <vector>
-#include "Transform.h"
+#include <stdexcept>
 
 namespace ironengine
 {
@@ -17,6 +18,7 @@ namespace ironengine
 	{
 		// Friend declarations
 		friend struct Core;
+
 	private:
 		/// @brief Pointer to the core, allows data to be passed up
 		std::weak_ptr<Core> m_core;
@@ -31,15 +33,37 @@ namespace ironengine
 
 	public:
 		/// @brief Creation and declaration of components 
-		/// @tparam T The type of Component to be added
 		/// @return Shared pointer of the component
 		template <typename T>
 		std::shared_ptr<T> addComponent()
 		{
+			// Create a shared pointer to the component linking it to the hierarchy
 			std::shared_ptr<T> rtn = std::make_shared<T>();
 			rtn->m_parent = m_self;
+			// Add it to the list of components before returning it
 			m_components.push_back(rtn);
+			// Run the onInit function for components as they are created
+			rtn->onInit();
 			return rtn;
+		}
+
+		/// @brief Search all components owned by the entity 
+		/// @return Shared pointer of the component
+		template <typename T>
+		std::shared_ptr<T> getComponent()
+		{
+			// Loop through the components vector
+			for (int i = 0; i < m_components.size(); i++)
+			{
+				// Create and return a shared pointer when one is found return it
+				std::shared_ptr<T> rtn = std::dynamic_pointer_cast<T>(m_components[i]);
+				if(rtn)
+				{ 
+					return rtn;
+				}
+			}
+			// If none are found something has gone wrong and return an error
+			throw std::runtime_error("Failed to find specified component");
 		}
 
 		/// @brief Gets the pointer to the core
@@ -50,7 +74,7 @@ namespace ironengine
 		/// @return Shared pointer to transform component
 		std::shared_ptr<Transform> getTransform();
 
-		/// @brief Function that is called every tick
+		/// @brief Function that updates every tick allowing constant updates
 		void tick();
 		/// @brief Function that is called when updating the display
 		void display();

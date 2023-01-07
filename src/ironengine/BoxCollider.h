@@ -14,6 +14,8 @@ namespace ironengine
 
 	public:
 		/// @brief Check to see if a collision is happening
+		/// @param _other The BoxCollider that we are checking collisions against
+		/// @return If a collision has occured or not
 		bool colliding(BoxCollider& _other);
 	};
 }

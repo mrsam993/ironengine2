@@ -5,6 +5,7 @@
 namespace ironengine
 {
 	void Component::onTick() { }
+	void Component::onInit() { }
 	void Component::onDisplay() { }
 	void Component::onKill() { }
 

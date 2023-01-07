@@ -2,7 +2,6 @@
 #define IRONENGINE_RESOURCES_H
 
 #include "Resource.h"
-
 #include <memory>
 #include <string>
 #include <vector>
@@ -12,6 +11,14 @@ namespace ironengine
 	/// @brief Struct that holds all individual resource components
 	struct Resources
 	{
+	private:
+		/// @brief Vector of all the resources
+		std::vector<std::shared_ptr<Resource> > m_resources;
+
+	public:
+		/// @brief Loads any type of resource
+		/// @param _path The path to the desired resource
+		/// @return A shared pointer to the resource
 		template <typename T>
 		std::shared_ptr<T> load(const std::string& _path)
 		{
@@ -33,9 +40,6 @@ namespace ironengine
 
 			return rtn;
 		}
-
-	private:
-		std::vector<std::shared_ptr<Resource> > m_resources;
 	};
 }
 

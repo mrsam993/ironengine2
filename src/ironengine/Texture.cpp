@@ -5,6 +5,7 @@ namespace ironengine
 {
 	void Texture::onLoad()
 	{
+		// Load the texture using the resource path
 		m_texture = std::make_shared<rend::Texture>(getPath().c_str());
 	}
 
