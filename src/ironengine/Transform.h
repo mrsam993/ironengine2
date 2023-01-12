@@ -13,7 +13,7 @@ namespace ironengine
 		/// @brief The position of a component
 		glm::vec3 m_Position;
 		/// @brief The rotation of a component
-		glm::vec3 m_Rotation;
+		glm::quat m_Rotation;
 		/// @brief The scale of a component
 		glm::vec3 m_Scale;
 		/// @brief The model matrix of a component

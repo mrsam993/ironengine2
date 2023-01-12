@@ -98,6 +98,9 @@ add_library(ironengine
     src/ironengine/SoundSource.h
     src/ironengine/SoundSource.cpp
 
+    src/ironengine/SoundListener.h
+    src/ironengine/SoundListener.cpp
+
     src/ironengine/Keyboard.h
     src/ironengine/Keyboard.cpp
 
@@ -127,6 +130,9 @@ add_library(ironengine
 
     src/ironengine/Audio.h
     src/ironengine/Audio.cpp
+
+    src/ironengine/Shader.h
+    src/ironengine/Shader.cpp
 )
 
 target_link_libraries(ironengine rend ${LIBSDL2} ${LIBOPENAL} ${LIBWINSOCK})

@@ -1,6 +1,7 @@
 #include "IrcComponent.h"
 #include <stdexcept>
 #include <iostream>
+#include <string>
 #include <random>
 #include <chrono>
 
@@ -105,6 +106,11 @@ namespace ironengine
 		if (sBuffer.find("No Ident response") != std::string::npos) {
 			authenticate();
 		}
+
+		if (sBuffer.find(":+iw") != std::string::npos) {
+			std::string message = "join #IRONENGINE5220251\n";
+			int iResult = send(m_socket, message.c_str(), (int)message.length(), 0);
+		}
 	}
 
 	void IrcComponent::authenticate()
@@ -112,9 +118,15 @@ namespace ironengine
 		// Assign a random user number for the program
 		srand(time(NULL));
 		int id = rand() % (9999 - 1000);
+		std::string sId = std::to_string(id);
 		
 		// Send the login details to the irc 
-		std::string message = "nick sam59\nuser sam59 * * :Anon Anon\n"; //\n 
+		std::string message = "nick S5220251GEP";
+		message.append(sId);
+		message.append("\nuser S5220251GEP");
+		message.append(sId);
+		message.append(" * * :Anon Anon\n");
+
 		int iResult = send(m_socket, message.c_str(), (int)message.length(), 0);
 		// Check if the connection is closed
 		if (iResult == 0)
@@ -128,10 +140,6 @@ namespace ironengine
 			m_disconnected = true;
 			return;
 		}
-
-		//"nick S5220251GEP" + string(id)
-		//"user S5220251GEP" + string(id) + "* * :Anon Anon"
-		//JOIN ironEngineGameEngineProgramming22/23
 	}
 
 	bool IrcComponent::disconnected()

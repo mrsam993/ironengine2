@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "TriangleRenderer.h"
 #include "SoundSource.h"
+#include "SoundListener.h"
 #include "Keyboard.h"
 #include "Camera.h"
 #include "IrcComponent.h"
@@ -14,5 +15,6 @@
 #include "Texture.h"
 #include "Model.h"
 #include "Audio.h"
+#include "Shader.h"
 
 #endif

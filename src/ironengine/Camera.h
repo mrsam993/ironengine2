@@ -26,6 +26,7 @@ namespace ironengine
 		/// @brief Called on camera declaration, sets m_camera in core 
 		void onInit();
 		/// @brief Calculates and gets the view matrix from the model matrix
+		/// @return View matrix as a mat4
 		rend::mat4 getViewMatrix();
 
 		/// @brief Field of view in degrees

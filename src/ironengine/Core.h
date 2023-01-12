@@ -66,19 +66,19 @@ namespace ironengine
 		std::shared_ptr<Entity> addEntity();
 
 		/// @brief Get the engine keyboard object
-		/// @return Shared pointer to the keyboard object.
+		/// @return Shared pointer to the keyboard object
 		std::shared_ptr<Keyboard> getKeyboard();
 
 		/// @brief Get the engine camera object
-		/// @return Shared pointer to the camera object.
+		/// @return Shared pointer to the camera object
 		std::shared_ptr<Camera> getCamera();
 
 		/// @brief Get the engine resources object
-		/// @return Shared pointer to the resources object.
+		/// @return Shared pointer to the resources object
 		std::shared_ptr<Resources> getResources();
 
-		/// @brief 
-		/// @param _out
+		/// @brief Function used to find things in the whole hierarchy
+		/// @param _out The type we want to find
 		template <typename T>
 		void find(std::vector<std::shared_ptr<T> >& _out)
 		{
