@@ -58,9 +58,9 @@ namespace ironengine
 
 		/// @brief Get the current looping value 
 		/// @return the current looping value
-		float getLooping();
+		bool getLooping();
 		/// @brief Set the current audio to loop or not
 		/// @param The looping value of the audio
-		void setLooping(float _looping);
+		void setLooping(bool _looping);
 	};
 }

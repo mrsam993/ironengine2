@@ -22,7 +22,6 @@ namespace ironengine
 		/// @brief Raw texture of the model renderer
 		rend::Texture m_rawTexture;
 		/// @brief Shader of the model renderer
-		//rend::Shader m_shader;
 		std::shared_ptr<Shader> m_shader;
 		/// @brief Texture of the model renderer
 		std::weak_ptr<Texture> m_texture;

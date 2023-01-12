@@ -6,7 +6,7 @@ namespace ironengine
 	// Forward declarations
 	struct BoxCollider;
 
-	/// @brief Struct that renders triangles, inherits from component
+	/// @brief Struct that detects collisions, inherits from component
 	struct RigidBody : Component
 	{
 	public:

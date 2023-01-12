@@ -25,12 +25,12 @@ else()
     contrib/emcc-emscripten-wasm/lib
   )
   set(CMAKE_EXECUTABLE_SUFFIX ".html")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file ${CMAKE_SOURCE_DIR}/resources@resources")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -sALLOW_MEMORY_GROWTH --preload-file ${CMAKE_SOURCE_DIR}/data@data")
   set(LIBOPENAL openal)
   set(LIBOPENGL GL)
   set(LIBGLEW GLEW)
   set(LIBSDL2 SDL2)
-  set(LIBWINSOCK socket)
+  #set(LIBWINSOCK socket)
 endif()
 
 add_library(rend

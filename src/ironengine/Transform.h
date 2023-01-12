@@ -51,8 +51,8 @@ namespace ironengine
 		/// @param _Position Change in position on all axis
 		void changePosition(glm::vec3 _Position);
 
-		/// @brief Get the current roation (without the ___) of a component
-		/// @return The current roation without the ___ 
+		/// @brief Get the current roation (without the w axis) of a component
+		/// @return The current roation without the w axis 
 		glm::vec3 getRotation();
 		/// @brief Set the rotation of a component using 3 separate axis
 		/// @param _x Rotation on the X axis

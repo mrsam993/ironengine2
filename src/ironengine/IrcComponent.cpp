@@ -1,3 +1,5 @@
+#ifndef __EMSCRIPTEN__
+
 #include "IrcComponent.h"
 #include <stdexcept>
 #include <iostream>
@@ -151,3 +153,5 @@ namespace ironengine
 		return m_disconnected;
 	}
 }
+
+#endif

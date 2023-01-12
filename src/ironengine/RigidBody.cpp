@@ -59,36 +59,16 @@ namespace ironengine
 		//// Check if the collision is on the y axis
 		//if (col1Pos.y - col2Pos.y < colSize.y && col1Pos.y - col2Pos.y > -colSize.y)
 		//{
-		//	// Check the positions of the objects so they move away from each other instead of into each other
-		//	if (col1Pos.y > col2Pos.y)
+		//	// If the object is not static move it accordingly
+		//	if (collider1->getStatic() == false)
 		//	{
-		//		// If the object is not static move it accordingly
-		//		if (collider1->getStatic() == false)
-		//		{
-		//			collider1->getParent()->getTransform()->changePosition(0.0f, 0.1f, 0.0f);
-		//		}
-
-		//		// If the object is not static move it accordingly
-		//		if (collider2->getStatic() == false)
-		//		{
-		//			collider2->getParent()->getTransform()->changePosition(0.0f, -0.1f, 0.0f);
-		//		}
+		//		collider1->getParent()->getTransform()->changePosition(0.0f, 0.1f, 0.0f);
 		//	}
 
-		//	// Check the positions of the objects so they move away from each other instead of into each other
-		//	if (col1Pos.y < col2Pos.y)
+		//	// If the object is not static move it accordingly
+		//	if (collider2->getStatic() == false)
 		//	{
-		//		// If the object is not static move it accordingly
-		//		if (collider1->getStatic() == false)
-		//		{
-		//			collider1->getParent()->getTransform()->changePosition(0.0f, -0.1f, 0.0f);
-		//		}
-
-		//		// If the object is not static move it accordingly
-		//		if (collider2->getStatic() == false)
-		//		{
-		//			collider2->getParent()->getTransform()->changePosition(0.0f, 0.1f, 0.0f);
-		//		}
+		//		collider2->getParent()->getTransform()->changePosition(0.0f, -0.1f, 0.0f);
 		//	}
 		//}
 

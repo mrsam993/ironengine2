@@ -26,6 +26,5 @@ namespace ironengine
 
 		// Set relative position and rotation
 		alListener3f(AL_POSITION, position.x, position.y, position.z);
-		alListenerfv(AL_ORIENTATION, rotation);
 	}
 }

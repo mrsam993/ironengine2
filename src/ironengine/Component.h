@@ -21,7 +21,6 @@ namespace ironengine
 	private:
 		/// @brief Function that is called every tick allowing constant updates
 		virtual void onTick();
-		
 		/// @brief Function that is called when updating the display
 		virtual void onDisplay();
 		/// @brief Function that destroys the current component

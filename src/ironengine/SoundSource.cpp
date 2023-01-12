@@ -86,12 +86,12 @@ namespace ironengine
 	}
 
 	// Get looping
-	float SoundSource::getLooping()
+	bool SoundSource::getLooping()
 	{
 		return m_looping;
 	}
 	// Set looping to a definite value
-	void SoundSource::setLooping(float _looping)
+	void SoundSource::setLooping(bool _looping)
 	{
 		m_looping = _looping;
 	}

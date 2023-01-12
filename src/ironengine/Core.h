@@ -61,6 +61,13 @@ namespace ironengine
 		/// @brief Ends the program
 		void stop();
 
+		/// @brief Manages data if called on a non windows platform
+		/// @param _userdata data required if running on a non windows platform
+		static void _loop(void* _userdata);
+
+		/// @brief Main loop of the program
+		void loop();
+
 		/// @brief Allows creation of entites from the core
 		/// @return Shared pointer to the entity
 		std::shared_ptr<Entity> addEntity();

@@ -14,7 +14,7 @@ namespace ironengine
 	// Default values for the model
 	ModelRenderer::ModelRenderer() :
 		m_rawModel("../data/export/export.obj"),
-		m_rawTexture("../data/export/export.jpg")
+		m_rawTexture("../data/export/exporttex.jpg")
 	{
 		m_mesh.loadQuad();
 	}
@@ -37,9 +37,9 @@ namespace ironengine
 		pr->model(getParent()->getTransform()->getModelMatrix());
 		r.view(getCore()->getCamera()->getViewMatrix());
 		r.model(m_model.lock()->getRaw().get());
-		r.texture(&m_rawTexture);
-		//r.texture(m_texture.lock()->getRaw().get());
-		// Render thE model
+		//r.texture(&m_rawTexture);
+		r.texture(m_texture.lock()->getRaw().get());
+		// Render the model
 		r.render();
 	}
 

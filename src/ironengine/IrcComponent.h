@@ -1,3 +1,5 @@
+#ifndef __EMSCRIPTEN__
+
 #include "Component.h"
 #include <rend/rend.h>
 #include <winsock2.h>
@@ -36,3 +38,5 @@ namespace ironengine
 		bool disconnected();
 	};
 }
+
+#endif

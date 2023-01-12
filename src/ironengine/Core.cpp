@@ -7,8 +7,15 @@
 #include <stdexcept>
 #include <AL/al.h>
 #include <AL/alc.h>
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
+#ifndef __EMSCRIPTEN__
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#endif
 
 namespace ironengine
 {
@@ -71,6 +78,8 @@ namespace ironengine
 		}
 		// Assign the defult position of the audio listener
 		alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+
+#ifndef __EMSCRIPTEN__
 		WSADATA wsadata;
 		// Attempt to initialize Winsock
 		int iResult = WSAStartup(MAKEWORD(2, 2), &wsadata);
@@ -78,6 +87,8 @@ namespace ironengine
 		{
 			throw std::runtime_error("WSAStartup failed");
 		}
+#endif
+
 		// Set up links to various other components and entites to establish the basic hierarchy of the core 
 		rtn->m_keyboard = std::make_shared<Keyboard>();
 		rtn->m_renderer = std::make_shared<rend::Renderer>(640, 480);
@@ -88,74 +99,90 @@ namespace ironengine
 		return rtn;
 	}
 
+	void Core::_loop(void* _userdata)
+	{
+		Core* self = (Core*)_userdata;
+		self->loop();
+	}
+
+	void Core::loop()
+	{
+		SDL_Event event = { 0 };
+		// Update the keyboard and the renderer as often as possible
+		m_keyboard->Update();
+		m_renderer->clear();
+
+		// Constantly check for any keyboard inputs
+		while (SDL_PollEvent(&event))
+		{
+			// If esc is pressed close the program
+			if (event.type == SDL_QUIT)
+			{
+				m_running = false;
+			}
+
+			// If a key is pressed down add it to the array of keys held down
+			else if (event.type == SDL_KEYDOWN)
+			{
+				m_keyboard->m_keys.push_back(event.key.keysym.sym);
+				m_keyboard->m_keysDown.push_back(event.key.keysym.sym);
+			}
+			// If a key is released remove it from the array of keys held down
+			else if (event.type == SDL_KEYUP)
+			{
+				for (size_t i = 0; i < m_keyboard->m_keys.size(); ++i)
+				{
+					if (m_keyboard->m_keys.at(i) == event.key.keysym.sym)
+					{
+						m_keyboard->m_keys.erase(m_keyboard->m_keys.begin() + i);
+						i--;
+					}
+				}
+				m_keyboard->m_keysUp.push_back(event.key.keysym.sym);
+			}
+		}
+
+		// Loop through every entity owned by the core and call all of their tick functions 
+		for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
+			//for (auto it = m_entities.begin();
+			it != m_entities.end(); ++it)
+		{
+			(*it)->tick();
+		}
+
+		// Clear the screen
+		rend::Renderer r(INITIAL_WIDTH, INITIAL_HEIGHT);
+		r.clear();
+
+		// Loop through every entity owned by the core and call all of their display functions 
+		for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
+			//for (auto it = m_entities.begin();
+			it != m_entities.end(); ++it)
+		{
+			(*it)->display();
+		}
+		SDL_GL_SwapWindow(m_window);
+
+		// Clear all keyboard arrays to avoid duplicate entries
+		m_keyboard->m_keysDown.clear();
+		m_keyboard->m_keysUp.clear();
+	}
+
 	void Core::start()
 	{
 		// Start the main loop of the program
-		SDL_Event event = { 0 };
+
 		m_running = true;
 
+#ifdef __EMSCRIPTEN__
+		emscripten_set_main_loop_arg(_loop, (void*)this, 60, 1);
+#else
 		while (m_running)
 		{
-			// Update the keyboard and the renderer as often as possible
-			m_keyboard->Update();
-			//m_renderer->view(glm::inverse(m_camera->m_transform->getModelMatrix()));
-			m_renderer->clear();
-
-			// Constantly check for any keyboard inputs
-			while (SDL_PollEvent(&event))
-			{
-				// If esc is pressed close the program
-				if (event.type == SDL_QUIT)
-				{
-					m_running = false;
-				}
-
-				// If a key is pressed down add it to the array of keys held down
-				else if (event.type == SDL_KEYDOWN)
-				{
-					m_keyboard->m_keys.push_back(event.key.keysym.sym);
-					m_keyboard->m_keysDown.push_back(event.key.keysym.sym);
-				}
-				// If a key is released remove it from the array of keys held down
-				else if (event.type == SDL_KEYUP)
-				{
-					for (size_t i = 0; i < m_keyboard->m_keys.size(); ++i)
-					{
-						if (m_keyboard->m_keys.at(i) == event.key.keysym.sym)
-						{
-							m_keyboard->m_keys.erase(m_keyboard->m_keys.begin() + i);
-							i--;
-						}
-					}
-					m_keyboard->m_keysUp.push_back(event.key.keysym.sym);
-				}
-			}
-
-			// Loop through every entity owned by the core and call all of their tick functions 
-			for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
-				//for (auto it = m_entities.begin();
-				it != m_entities.end(); ++it)
-			{
-				(*it)->tick();
-			}
-
-			// Clear the screen
-			rend::Renderer r(INITIAL_WIDTH, INITIAL_HEIGHT);
-			r.clear();
-
-			// Loop through every entity owned by the core and call all of their display functions 
-			for (std::vector<std::shared_ptr<Entity> >::iterator it = m_entities.begin();
-				//for (auto it = m_entities.begin();
-				it != m_entities.end(); ++it)
-			{
-				(*it)->display();
-			}
-			SDL_GL_SwapWindow(m_window);
-
-			// Clear all keyboard arrays to avoid duplicate entries
-			m_keyboard->m_keysDown.clear();
-			m_keyboard->m_keysUp.clear();
+			loop();
 		}
+#endif
+
 	}
 
 	void Core::stop()
