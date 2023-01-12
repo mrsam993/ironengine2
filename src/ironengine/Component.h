@@ -21,8 +21,7 @@ namespace ironengine
 	private:
 		/// @brief Function that is called every tick allowing constant updates
 		virtual void onTick();
-		/// @brief Called on component declaration
-		virtual void onInit();
+		
 		/// @brief Function that is called when updating the display
 		virtual void onDisplay();
 		/// @brief Function that destroys the current component
@@ -43,6 +42,9 @@ namespace ironengine
 		std::weak_ptr<Keyboard> m_keyboard;
 
 	public:
+		/// @brief Called on component declaration
+		virtual void onInit();
+
 		/// @brief Gets the pointer to the core
 		/// @return Shared pointer to core
 		std::shared_ptr<Core> getCore();

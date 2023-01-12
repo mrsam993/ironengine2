@@ -100,7 +100,7 @@ namespace ironengine
 
 		// Convert the irc data to a string
 		std::string sBuffer = std::string(buffer);
-		std::cout << sBuffer;
+		//std::cout << sBuffer << std::endl;
 
 		// Ensure that login data is sent at the right time
 		if (sBuffer.find("No Ident response") != std::string::npos) {
@@ -109,6 +109,11 @@ namespace ironengine
 
 		if (sBuffer.find(":+iw") != std::string::npos) {
 			std::string message = "join #IRONENGINE5220251\n";
+			int iResult = send(m_socket, message.c_str(), (int)message.length(), 0);
+		}
+
+		if (sBuffer.find("#IRONENGINE5220251 :End of /NAMES list.") != std::string::npos) {
+			std::string message = "PRIVMSG #IRONENGINE5220251 : TEST\n";
 			int iResult = send(m_socket, message.c_str(), (int)message.length(), 0);
 		}
 	}

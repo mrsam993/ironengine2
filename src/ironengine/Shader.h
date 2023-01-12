@@ -2,7 +2,7 @@
 #include <memory>
 #include <rend/rend.h>
 
-namespace ironengine //ASK WHY DOESN'T THIS WORK
+namespace ironengine
 {
 	/// @brief Struct that holds a frag and vertex shader
 	struct Shader : Resource

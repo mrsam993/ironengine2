@@ -22,6 +22,11 @@ namespace ironengine
 		m_looping(false)
 	{ }
 
+	void SoundSource::onInit(float _volume)
+	{
+		m_volume = _volume;
+	}
+
 	void SoundSource::play()
 	{
 		

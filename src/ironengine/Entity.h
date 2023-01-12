@@ -45,6 +45,19 @@ namespace ironengine
 			// Run the onInit function for components as they are created
 			rtn->onInit();
 			return rtn;
+		}		
+
+		template <typename T, typename U>
+		std::shared_ptr<T> addComponent(U _u)
+		{
+			// Create a shared pointer to the component linking it to the hierarchy
+			std::shared_ptr<T> rtn = std::make_shared<T>();
+			rtn->m_parent = m_self;
+			// Add it to the list of components before returning it
+			m_components.push_back(rtn);
+			// Run the onInit function for components as they are created
+			rtn->onInit(_u);
+			return rtn;
 		}
 
 		/// @brief Search all components owned by the entity 

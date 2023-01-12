@@ -28,6 +28,8 @@ namespace ironengine
 		/// @param _pitch Pitch of the audio
 		/// @param _looping If the audio should loop or not
 		SoundSource(float _volume, float _pitch, bool _looping);
+		//void onInit();
+		void onInit(float _volume);
 
 		/// @brief Play the sound that the soundsource has
 		void play();

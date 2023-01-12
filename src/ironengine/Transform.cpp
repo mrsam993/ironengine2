@@ -51,7 +51,13 @@ namespace ironengine
 	// Adjust position by changing a value
 	void Transform::changePosition(float _x, float _y, float _z)
 	{
-		m_Position += glm::vec3(_x, _y, _z);
+		glm::mat4 model(1.0f);
+		model = rend::rotate(model, rend::radians(m_Rotation.y), rend::vec3(0, 1, 0));
+		model = rend::rotate(model, rend::radians(m_Rotation.x), rend::vec3(1, 0, 0));
+		model = rend::rotate(model, rend::radians(m_Rotation.z), rend::vec3(0, 0, 1));
+		glm::vec3 fwd(_x, _y, _z);
+		fwd = glm::vec3(model * glm::vec4(fwd, 1.0f));
+		m_Position += fwd;
 		m_TranslationMatrix = glm::translate(glm::mat4(1.0f), m_Position);
 		m_Dirty = true;
 	}

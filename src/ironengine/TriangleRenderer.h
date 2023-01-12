@@ -1,7 +1,7 @@
 #include "Component.h"
 #include <rend/rend.h>
 
-namespace ironengine //ASK CHANGE NAME AND COMMENTS
+namespace ironengine
 {
 	// Forward declarations
 	struct Texture;
@@ -17,9 +17,11 @@ namespace ironengine //ASK CHANGE NAME AND COMMENTS
 	private:
 		/// @brief Mesh of the triangle renderer
 		rend::Mesh m_mesh;
+		rend::Model m_rawModel;
+		rend::Texture m_rawTexture;
 		/// @brief Shader of the triangle renderer
-		rend::Shader m_shader;
-		//std::shared_ptr<Shader> m_shader;
+		//rend::Shader m_shader;
+		std::shared_ptr<Shader> m_shader;
 		/// @brief Color of the triangle renderer
 		glm::vec4 m_color;
 		/// @brief Texture of the triangle renderer
