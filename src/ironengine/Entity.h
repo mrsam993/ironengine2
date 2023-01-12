@@ -47,8 +47,10 @@ namespace ironengine
 			return rtn;
 		}		
 
-		template <typename T, typename U>
-		std::shared_ptr<T> addComponent(U _u)
+		/// @brief Creation and declaration of components with multiple arguments
+		/// @return Shared pointer of the component
+		template <typename T, typename... Args>
+		std::shared_ptr<T> addComponent(Args&&... args)
 		{
 			// Create a shared pointer to the component linking it to the hierarchy
 			std::shared_ptr<T> rtn = std::make_shared<T>();
@@ -56,7 +58,7 @@ namespace ironengine
 			// Add it to the list of components before returning it
 			m_components.push_back(rtn);
 			// Run the onInit function for components as they are created
-			rtn->onInit(_u);
+			rtn->onInit(std::forward< Args >(args)...);
 			return rtn;
 		}
 

@@ -4,7 +4,7 @@
 
 namespace ironengine
 {
-	/// @brief Struct that holds an individual texture
+	/// @brief Struct that holds a set of textures
 	struct Texture : Resource
 	{
 	private:

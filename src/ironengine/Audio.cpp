@@ -49,7 +49,7 @@ namespace ironengine
 		ALsizei freq = 0;
 		std::vector<unsigned char> bufferData;
 		// Load the audio using the resource path
-		load_ogg(getPath().c_str(), bufferData, format, freq);
+		load_ogg(std::string(getPath() + ".ogg").c_str(), bufferData, format, freq);
 
 		// Assign various buffer to get audio data
 		ALuint bufferId = 0;

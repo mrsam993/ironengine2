@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include "TriangleRenderer.h"
+#include "ModelRenderer.h"
 #include "SoundSource.h"
 #include "SoundListener.h"
 #include "Keyboard.h"
@@ -16,5 +17,7 @@
 #include "Model.h"
 #include "Audio.h"
 #include "Shader.h"
+#include "BoxCollider.h"
+#include "RigidBody.h"
 
 #endif

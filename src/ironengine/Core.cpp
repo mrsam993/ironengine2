@@ -12,11 +12,7 @@
 
 namespace ironengine
 {
-	Core::Core()
-	{
-		//m_renderer->blend(true);
-		//m_renderer->depthTest(true);
-	}
+	Core::Core() { }
 
 	Core::~Core()
 	{

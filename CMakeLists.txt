@@ -92,6 +92,9 @@ add_library(ironengine
     src/ironengine/TriangleRenderer.h
     src/ironengine/TriangleRenderer.cpp
 
+    src/ironengine/ModelRenderer.h
+    src/ironengine/ModelRenderer.cpp
+
     src/ironengine/Transform.h
     src/ironengine/Transform.cpp
 

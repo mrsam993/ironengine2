@@ -4,17 +4,34 @@
 
 namespace ironengine
 {
-	BoxCollider::BoxCollider(glm::vec3 _size, glm::vec3 _offset, bool _static) :
-		m_size(_size),
-		m_offset(_offset),
-		m_static(_static)
-	{}
+	// Called once when the box collider is created, servers as a makeshift constructor 
+	void BoxCollider::onInit(glm::vec3 _size, glm::vec3 _offset, bool _static)
+	{
+		m_size = _size;
+		m_offset = _offset;
+		m_static = _static;
+	}
+
+	glm::vec3 BoxCollider::getSize()
+	{
+		return m_size;
+	}
+
+	glm::vec3 BoxCollider::getOffset()
+	{
+		return m_offset;
+	}
+
+	bool BoxCollider::getStatic()
+	{
+		return m_static;
+	}
 
 	bool BoxCollider::colliding(BoxCollider& _other)
 	{
 		// Declare local variables
-		glm::vec3 a = getParent()->getTransform()->getPosition();
-		glm::vec3 b = _other.getParent()->getTransform()->getPosition();
+		glm::vec3 a = getParent()->getTransform()->getPosition() + m_offset;
+		glm::vec3 b = _other.getParent()->getTransform()->getPosition() + _other.m_offset;
 		glm::vec3 ahs = m_size / 2.0f;
 		glm::vec3 bhs = _other.m_size / 2.0f;
 

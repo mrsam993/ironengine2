@@ -15,11 +15,22 @@ namespace ironengine
 		bool m_static;
 
 	public:
-		/// @brief Detailed constructor for the box collider
+		/// @brief Initial setup for the box collider, only called once
 		/// @param Size of the box collider
 		/// @param Offset of the collider
 		/// @param If the object can move
-		BoxCollider(glm::vec3 _size, glm::vec3 _offset, bool _static);
+		void onInit(glm::vec3 _size, glm::vec3 _offset, bool _static);
+
+		/// @brief Get data on the colliders size
+		/// @retuen The colliders size
+		glm::vec3 getSize();
+		/// @brief Get data on the colliders offset
+		/// @retuen The colliders offset
+		glm::vec3 getOffset();
+		/// @brief Get data on if the collider should move or not
+		/// @retuen If the collider should move or not
+		bool getStatic();
+
 		/// @brief Check to see if a collision is happening
 		/// @param _other The BoxCollider that we are checking collisions against
 		/// @return If a collision has occured or not

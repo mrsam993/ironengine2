@@ -18,13 +18,12 @@ namespace ironengine
 	public:
 		/// @brief Basic constructor for camera
 		Camera();
-		/// @brief Detailed constructor for camera
+		/// @brief Initial setup for the camera, only called once 
 		/// @param _fov Field of view in degrees
 		/// @param _near Position of the near plane
 		/// @param _far Position of the far plane
-		Camera(float _fov, float _near, float _far);
-		/// @brief Called on camera declaration, sets m_camera in core 
-		void onInit();
+		void onInit(float _fov, float _near, float _far);
+
 		/// @brief Calculates and gets the view matrix from the model matrix
 		/// @return View matrix as a mat4
 		rend::mat4 getViewMatrix();

@@ -12,7 +12,8 @@ namespace ironengine
 {
 	void SoundListener::onInit()
 	{
-		
+		glm::vec3 position = getParent()->getTransform()->getPosition();
+		alListener3f(AL_POSITION, position.x, position.y, position.z);
 	}
 
 	void SoundListener::onTick()

@@ -9,22 +9,12 @@
 
 namespace ironengine
 {
-	SoundSource::SoundSource(float _volume, float _pitch, bool _looping) :
-		m_volume(_volume),
-		m_pitch(_pitch),
-		m_looping(_looping)
-	{ }
-
-	// Default values for the transform component
-	SoundSource::SoundSource() :
-		m_volume(1.0f),
-		m_pitch(1.0f),
-		m_looping(false)
-	{ }
-
-	void SoundSource::onInit(float _volume)
+	// Called once when the sound source is created, servers as a makeshift constructor 
+	void SoundSource::onInit(float _volume, float _pitch, bool _looping)
 	{
 		m_volume = _volume;
+		m_pitch = _pitch;
+		m_looping = _looping;
 	}
 
 	void SoundSource::play()

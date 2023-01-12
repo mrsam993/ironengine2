@@ -6,21 +6,17 @@ using namespace ironengine;
 /// @brief Player, has an attached camera, model and audio listener, inherits from component
 struct Player : Component
 {
-    /// @brief Default constructor for the player 
-    Player() :
-        m_angle(0)
-    {}
-
     /// @brief Initial setup for the player, only called once
     void onInit()
     {
         // Attach components to player
-        //model = getParent()->addComponent<TriangleRenderer>();
-        //model->setShader(getCore()->getResources()->load<Shader>("../data/shaders/basic"));
-        camera = getParent()->addComponent<Camera>();
+        //model = getParent()->addComponent<ModelRenderer>(); ASK WHY DOESN'T THIS WORK
+        camera = getParent()->addComponent<Camera>(45.0f, 0.1f, 100.0f);
         listener = getParent()->addComponent<SoundListener>();
         transform = getParent()->getTransform();
-        //getEntity()->addComponent<AudioListener>();
+        boxCollider = getParent()->addComponent<BoxCollider>(glm::vec3(0.1f), glm::vec3(0.0f), false);
+        transform->setPosition(0.0f, 2.0f, 0.0f);
+        transform->setRotation(0.0f, 0.0f, 0.0f); //ASK WHY DOESN'T THIS WORK
     } 
 
     /// @brief Function that updates every tick allowing constant updates
@@ -39,63 +35,89 @@ struct Player : Component
         // When LEFT is pressed turn left
         if (getCore()->getKeyboard()->GetKey(KeyCode::left))
         {
-            transform->changeRotation(0.0f, 0.5f, 0.0f);
+            transform->changeRotation(0.0f, 1.0f, 0.0f);
         }
         // When Right is pressed turn right
         if (getCore()->getKeyboard()->GetKey(KeyCode::right))
         {
-            transform->changeRotation(0.0f, -0.5f, 0.0f);
+            transform->changeRotation(0.0f, -1.0f, 0.0f);
         }
-
-        // Update the positions of the components attached to the player
-        //getParent()->getTransform()->setPosition(transform->getPosition());
-        //camera->getParent()->getTransform()->setPosition(transform->getPosition());
-        //listener->getParent()->getTransform()->setPosition(transform->getPosition());
     }
 
-    /// @brief Current angle of the player
-    float m_angle;
     /// @brief Shared pointer to the player model
-    std::shared_ptr<TriangleRenderer> model;
+    std::shared_ptr<ModelRenderer> model;
     /// @brief Shared pointer to the player camera
     std::shared_ptr<Camera> camera;
     /// @brief Listener for audio in the scene
     std::shared_ptr<SoundListener> listener;
+    /// @brief Shared pointer to the players box collider
+    std::shared_ptr<BoxCollider> boxCollider;
     /// @brief Shared pointer to the players transform component
     std::shared_ptr<Transform> transform;
 };
 
 /// @brief Main function of the program and where the program begins
-int main(int argc, char* argv[]) //TODO COMMENT THIS
+int main(int argc, char* argv[])
 {
-    std::shared_ptr<ironengine::Core> core = ironengine::Core::initialize(argv[0]);
+    auto core = ironengine::Core::initialize(argv[0]);
 
-    //
-    auto e = core->addEntity();
-    auto player = e->addComponent<Player>();
-    //player->onInit();
-
-    //
+    // First entity that hold the player
     auto e1 = core->addEntity();
-    std::shared_ptr<TriangleRenderer> tr = e1->addComponent<TriangleRenderer>();
-    tr->setColor(1.0f, 1.0f, 0.0f, 0.5f);
-    tr->setShader(core->getResources()->load<Shader>("../data/shaders/basic"));
-    tr->setModel(core->getResources()->load<Model>("../data/curuthers/curuthers.obj"));
-    //tr->setShader(core->getResources()->load<Shader>("shaders/basic"));
-    //tr->setTexture(core->getResources()->load<Texture>("../data/box.jpg"));
-    e1->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -15.0f));
-  
-    //
+    auto player = e1->addComponent<Player>();
+    auto rigidbody = e1->addComponent<RigidBody>();
+
+    //// Second entity that holds our basic triangle ASK SHOULD I REMOVE THIS
+    //auto e2 = core->addEntity();
+    //std::shared_ptr<TriangleRenderer> tr = e2->addComponent<TriangleRenderer>();
+    //tr->setColor(1.0f, 1.0f, 0.0f, 0.5f);
+    //tr->setShader(core->getResources()->load<Shader>("../data/shaders/basic"));
+    //e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -15.0f));
+
+    //// Second entity that holds our basic cat model
+    //auto e2 = core->addEntity();
+    //auto mr = e2->addComponent<ModelRenderer>();
+    //mr->setShader(core->getResources()->load<Shader>("../data/shaders/basic"));
+    //mr->setModel(core->getResources()->load<Model>("../data/curuthers/curuthers"));
+    ////mr->setTexture(core->getResources()->load<Texture>("../data/curuthers/Whiskers_diffuse")); ASK WHY DOESN'T THIS WORK
+    //e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -15.0f));
+    //auto bc = e2->addComponent<BoxCollider>(glm::vec3(3.0f, 5.5f, 1.1f), glm::vec3(0.0f, 0.75f, 0.0f), true);
+    //auto ss1 = e2->addComponent<SoundSource>(1.0f, 1.0f, true);
+    //ss1->setAudio(core->getResources()->load<Audio>("../data/audio/dixie_horn")); //ASK AUDIO DISTANCE BUG
+
+     // Second entity that holds our enviroment model TODO ADD AUDIO
     auto e2 = core->addEntity();
-    e2->addComponent<IrcComponent>();
+    auto mr = e2->addComponent<ModelRenderer>();
+    mr->setShader(core->getResources()->load<Shader>("../data/shaders/basic"));
+    mr->setModel(core->getResources()->load<Model>("../data/export/export"));
+    e2->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+    // Wall colliders
+    auto wall1Collider = e2->addComponent<BoxCollider>(glm::vec3(100.0f, 10.0f, 4.0f), glm::vec3(0.0f, 0.0f, -24.0f), true);
+    auto wall2Collider = e2->addComponent<BoxCollider>(glm::vec3(100.0f, 10.0f, 4.0f), glm::vec3(0.0f, 0.0f, 20.0f), true);
+    auto wall3Collider = e2->addComponent<BoxCollider>(glm::vec3(4.0f, 10.0f, 100.0f), glm::vec3(22.0f, 0.0f, 0.0f), true);
+    auto wall4Collider = e2->addComponent<BoxCollider>(glm::vec3(4.0f, 10.0f, 100.0f), glm::vec3(-18.0f, 0.0f, 0.0f), true);
+    auto wall5Collider = e2->addComponent<BoxCollider>(glm::vec3(40.0f, 10.0f, 11.0f), glm::vec3(30.0f, 0.0f, -1.0f), true);
+    // Pole colliders
+    auto pole1Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(-12.5f, 0.0f, -16.5f), true);
+    auto pole2Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(-1.5f, 0.0f, -16.5f), true);
+    auto pole3Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(10.25f, 0.0f, -16.5f), true);
+    auto pole4Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(9.75f, 0.0f, -10.5f), true);
+    auto pole5Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(-12.5f, 0.0f, 15.0f), true);
+    auto pole6Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(-1.75f, 0.0f, 15.0f), true);
+    auto pole7Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(10.25f, 0.0f, 15.0f), true);
+    auto pole8Collider = e2->addComponent<BoxCollider>(glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(9.75f, 0.0f, 7.5f), true);
+    // Object colliders
+    auto tableCollider = e2->addComponent<BoxCollider>(glm::vec3(14.0f, 10.0f, 4.0f), glm::vec3(20.0f, 0.0f, 6.0f), true);
+  
+    // Third entity that holds our irc component
+    auto e3 = core->addEntity();
+    e3->addComponent<IrcComponent>();
 
-    //
-    std::shared_ptr<SoundSource> ss1 = e2->addComponent<SoundSource>(1.0f); //TODO https://stackoverflow.com/questions/14473085/perfect-forwarding-of-variading-template-arguments
-    ss1->getParent()->getTransform()->setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
-    ss1->setAudio(core->getResources()->load<Audio>("../data/dixie_horn.ogg"));
-    ss1->setLooping(true);
-
+    // Start the program
     core->start();
 
     return 0;
 }
+
+//File paths from root and package TODO EMSCRIPTEN
+//high precisiion in frag shader
+//main turn into function pointer mscripted_setloop

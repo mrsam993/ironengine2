@@ -1,9 +1,11 @@
 #include "Component.h"
-#include "BoxCollider.h"
 #include <rend/rend.h>
 
 namespace ironengine
 {
+	// Forward declarations
+	struct BoxCollider;
+
 	/// @brief Struct that renders triangles, inherits from component
 	struct RigidBody : Component
 	{

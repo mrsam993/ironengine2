@@ -76,8 +76,6 @@ namespace ironengine
 
 	void IrcComponent::onTick()
 	{
-		//remove bytes from outgoing vector.erase(begin, begin+iResult);
-
 		// Create a buffer and fill it with data from the irc
 		char buffer[4096] = { 0 };
 		int iResult = recv(m_socket, buffer, sizeof(buffer), 0);

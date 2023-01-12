@@ -5,12 +5,6 @@
 
 namespace ironengine
 {
-	Camera::Camera(float _fov, float _near, float _far) :
-		m_fov(_fov),
-		m_nearPlane(_near),
-		m_farPlane(_far)
-	{}
-
 	// Default values for the camera 
 	Camera::Camera() :
 		m_fov(45.0f),
@@ -18,8 +12,12 @@ namespace ironengine
 		m_farPlane(100.0f)
 	{}
 
-	void Camera::onInit()
+	// Called once when the camera is created, servers as a makeshift constructor 
+	void Camera::onInit(float _fov, float _near, float _far)
 	{
+		m_fov = _fov;
+		m_nearPlane = _near;
+		m_farPlane = _far;
 		getCore()->m_camera = getParent()->getComponent<Camera>();
 	}
 

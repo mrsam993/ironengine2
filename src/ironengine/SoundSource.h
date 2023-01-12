@@ -21,16 +21,11 @@ namespace ironengine
 		bool m_looping;
 
 	public:
-		/// @brief Basic constructor for the SoundSource component
-		SoundSource();
-		/// @brief Detailed constructor for camera
-		/// @param _volume Volume of the audio
-		/// @param _pitch Pitch of the audio
-		/// @param _looping If the audio should loop or not
-		SoundSource(float _volume, float _pitch, bool _looping);
-		//void onInit();
-		void onInit(float _volume);
-
+		/// @brief Initial setup for the Soundsource, only called once
+		/// @param Volume of the audio
+		/// @param Pitch of the audio
+		/// @param If the audio should loop or not
+		void onInit(float _volume, float _pitch, bool _looping);
 		/// @brief Play the sound that the soundsource has
 		void play();
 		/// @brief Check if the sound is already playing
